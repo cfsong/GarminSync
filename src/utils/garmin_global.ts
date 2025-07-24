@@ -77,7 +77,7 @@ export const migrateGarminGlobal2GarminCN = async (count = 200) => {
     // const runningActs = _.filter(actSlices, { activityType: { typeKey: 'running' } });
 
     const runningActs = actSlices;
-    console.log(`本次要迁移的活动有 ${runningActs.length} 条`);
+    console.log(`本次要迁移的活动有 ${number2capital(runningActs.length)} 条`);
     for (let j = 0; j < runningActs.length; j++) {
         const act = runningActs[j];
         // 下载佳明原始数据
