@@ -64,6 +64,7 @@ export const getGaminGlobalClient = async (): Promise<GarminClientType> => {
             }
         }
 
+        let userInfo;
         try {
             userInfo = await GCClient.getUserProfile();
         } catch (e) {
