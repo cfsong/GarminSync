@@ -64,14 +64,19 @@ export const getGaminGlobalClient = async (): Promise<GarminClientType> => {
             }
         }
 
-        let userInfo;
         try {
             userInfo = await GCClient.getUserProfile();
         } catch (e) {
             console.log('Warn: Global session expired, force re-login...');
-            await GCClient.login(GARMIN_GLOBAL_USERNAME, GARMIN_GLOBAL_PASSWORD);
-            await updateSessionToDB('GLOBAL', GCClient.exportToken());
-            userInfo = await GCClient.getUserProfile();
+            try {
+                await GCClient.login(GARMIN_GLOBAL_USERNAME, GARMIN_GLOBAL_PASSWORD);
+                await updateSessionToDB('GLOBAL', GCClient.exportToken());
+                userInfo = await GCClient.getUserProfile();
+            } catch (loginErr) {
+                // 重新登录也失败（如 429），直接往上抛，让外层 catch 处理
+                console.error('Re-login failed:', loginErr);
+                throw loginErr;
+            }
         }
         const { fullName, userName: emailAddress, location } = userInfo;
         if (!emailAddress) {
