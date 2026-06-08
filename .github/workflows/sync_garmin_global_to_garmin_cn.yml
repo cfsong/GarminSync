@@ -33,6 +33,11 @@ jobs:
           node-version: "18"
           cache: "yarn"
       - run: yarn
+      - name: Test Garmin connectivity via proxy
+        run: |
+          curl -v --proxy socks5h://isp.decodo.com:10001 --proxy-user sp32nuxcun:e7aj0b+tFa7r5jHvIQ \
+               https://sso.garmin.com/sso/signin
+      
       - run: yarn sync_global
         timeout-minutes: 5
       - uses: stefanzweifel/git-auto-commit-action@v5
