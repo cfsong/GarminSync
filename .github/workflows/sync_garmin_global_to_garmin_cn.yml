@@ -33,7 +33,12 @@ jobs:
           node-version: "18"
           cache: "yarn"
       - run: yarn
-      - run: yarn sync_global
+      - name: Run yarn sync_global
+        run: yarn sync_global
+        env:
+          GLOBAL_AGENT_HTTP_PROXY: ${{ secrets.TEST_PROXY }}
+          GLOBAL_AGENT_HTTPS_PROXY: ${{ secrets.TEST_PROXY }}
+      # - run: yarn sync_global
         timeout-minutes: 5
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
