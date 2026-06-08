@@ -1,3 +1,4 @@
+import 'global-agent/bootstrap';
 import { BARK_KEY_DEFAULT } from './constant';
 import { syncGarminGlobal2GarminCN } from './utils/garmin_global';
 
